@@ -34,6 +34,13 @@
 #include "G4ParticleGun.hh"
 #include "globals.hh"
 
+#include "TFile.h"
+#include "TTree.h"
+#include "TRandom3.h"
+#include "vector"
+#include "TTreeReader.h"
+#include "TTreeReaderValue.h"
+
 class G4ParticleGun;
 class G4Event;
 class G4Box;
@@ -54,10 +61,22 @@ class B1PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
   
     // method to access particle gun
     const G4ParticleGun* GetParticleGun() const { return fParticleGun; }
+
+    G4int nentries;
+    TTreeReader fBeamSourceReader;
   
   private:
     G4ParticleGun*  fParticleGun; // pointer a to G4 gun class
     G4Box* fEnvelopeBox;
+
+    //G4GenericMessenger* fMessenger;
+    G4ParticleDefinition* fProton;
+    G4double fMomentum;
+    G4double fSigmaMomentum;
+    G4double fSigmaAngle;
+    G4bool fRandomizePrimary;
+    
+    TFile *fBeamSourceFile;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
